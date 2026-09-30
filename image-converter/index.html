@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- @@HEAD_META@@ -->
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./theme.css">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="site-header__brand" href="#" id="home-link" hidden>
+      <span id="home-link-text"></span>
+    </a>
+    <h1 class="site-header__title">Free Image Converter: HEIC, JPG, PNG, WebP &amp; TIFF</h1>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <section class="intro">
+    <h2 class="intro__tagline" id="tagline"></h2>
+    <p class="privacy-notice">
+      <svg aria-hidden="true" class="privacy-notice__icon" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.2 3.4 9.9 8 11 4.6-1.1 8-5.8 8-11V5l-8-3Zm0 2.2 6 2.25V11c0 4.2-2.7 8-6 8.9-3.3-.9-6-4.7-6-8.9V6.45l6-2.25Z"/></svg>
+      Your files are processed entirely on your device. Nothing is uploaded — conversion works even if you disconnect from the internet after this page has loaded.
+    </p>
+  </section>
+
+  <section class="converter" aria-labelledby="tagline">
+
+    <div id="drop-zone" class="drop-zone" tabindex="0" role="button" aria-label="Add image files: drag and drop, or activate to choose files">
+      <svg aria-hidden="true" class="drop-zone__icon" viewBox="0 0 24 24"><path d="M12 3a1 1 0 0 1 1 1v9.59l2.3-2.3a1 1 0 1 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.42l2.3 2.3V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+      <p class="drop-zone__text">Drag and drop images here</p>
+      <p class="drop-zone__or">or</p>
+      <button type="button" class="button button--primary" id="choose-files-btn">Choose files</button>
+      <input type="file" id="file-input" multiple accept="image/*,.heic,.heif,.tif,.tiff" hidden>
+    </div>
+
+    <section class="settings" aria-label="Conversion settings">
+      <div class="settings__row">
+        <label class="settings__field">
+          <span class="settings__label">Convert to</span>
+          <select id="format-select" class="select">
+            <option value="jpg">JPG</option>
+            <option value="png">PNG</option>
+            <option value="webp">WebP</option>
+          </select>
+        </label>
+
+        <div class="settings__field" id="quality-field">
+          <label class="settings__label" for="quality-slider">Quality: <span id="quality-value">90</span></label>
+          <input type="range" id="quality-slider" min="10" max="100" value="90" step="1">
+        </div>
+      </div>
+
+      <p id="webp-unsupported-note" class="settings__note" hidden>
+        Your browser can't encode WebP images, so this option is disabled. Try Chrome, Edge, or Firefox for WebP output.
+      </p>
+
+      <details class="settings__resize">
+        <summary>Resize (optional)</summary>
+        <div class="settings__row">
+          <label class="settings__field">
+            <span class="settings__label">Max width (px)</span>
+            <input type="number" id="max-width" class="text-input" min="1" placeholder="No limit">
+          </label>
+          <label class="settings__field">
+            <span class="settings__label">Max height (px)</span>
+            <input type="number" id="max-height" class="text-input" min="1" placeholder="No limit">
+          </label>
+        </div>
+        <p class="settings__hint">The image's aspect ratio is preserved and it is never enlarged.</p>
+      </details>
+
+      <p class="settings__note">
+        Converted images won't keep EXIF metadata such as GPS location or camera details — a privacy benefit of converting.
+      </p>
+    </section>
+
+    <section class="file-list-section" aria-label="Files">
+      <div class="file-list-section__toolbar">
+        <div class="file-list-section__actions">
+          <button type="button" class="button button--primary" id="convert-all-btn" disabled>Convert all</button>
+          <button type="button" class="button" id="download-zip-btn" disabled>Download all (ZIP)</button>
+          <button type="button" class="button button--ghost" id="clear-all-btn" disabled>Clear all</button>
+        </div>
+        <p class="file-list-section__progress" id="progress-text"></p>
+      </div>
+
+      <ul id="file-list" class="file-list"></ul>
+      <p id="empty-state" class="empty-state">No files added yet.</p>
+    </section>
+
+    <div id="status-live" class="visually-hidden" role="status" aria-live="polite"></div>
+
+  </section>
+
+  <section class="info-section">
+    <h2>How it works</h2>
+    <ol class="how-it-works">
+      <li>Add one or more images by dragging them in or choosing files from your device.</li>
+      <li>Pick an output format and, if you'd like, a maximum size.</li>
+      <li>Convert one file at a time or all at once — everything happens locally in your browser.</li>
+      <li>Download each result individually, or grab them all as a single ZIP file.</li>
+    </ol>
+  </section>
+
+  <section class="info-section" aria-labelledby="faq-heading">
+    <h2 id="faq-heading">Frequently asked questions</h2>
+    <div class="faq" id="faq"></div>
+  </section>
+
+  <section class="info-section cta" id="cta-section" hidden>
+    <h2 id="cta-heading"></h2>
+    <p id="cta-text"></p>
+    <a class="button button--primary" id="cta-button" href="#"></a>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <p id="credit-text"></p>
+    <button type="button" class="link-button" id="credits-link">Open-source credits</button>
+  </div>
+</footer>
+
+<dialog id="credits-dialog" class="credits-dialog">
+  <h2>Open-source credits</h2>
+  <pre id="credits-content"></pre>
+  <button type="button" class="button" id="credits-close">Close</button>
+</dialog>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
