@@ -1,0 +1,4 @@
+{
+  "buildCommand": "npm run build -- image-converter",
+  "outputDirectory": "dist/image-converter"
+}
